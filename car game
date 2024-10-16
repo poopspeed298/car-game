@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Racing Game</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="500" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let car = { x: 220, y: 500, width: 60, height: 100 };
+        const keys = { ArrowLeft: false, ArrowRight: false };
+        
+        function drawCar() {
+            ctx.fillStyle = 'red';
+            ctx.fillRect(car.x, car.y, car.width, car.height);
+        }
+        
+        function update() {
+            if (keys.ArrowLeft && car.x > 0) car.x -= 5;
+            if (keys.ArrowRight && car.x < canvas.width - car.width) car.x += 5;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawCar();
+            requestAnimationFrame(update);
+        }
+        
+        window.addEventListener('keydown', (e) => {
+            if (e.key in keys) keys[e.key] = true;
+        });
+        
+        window.addEventListener('keyup', (e) => {
+            if (e.key in keys) keys[e.key] = false;
+        });
+        
+        update();
+    </script>
+</body>
+</html>
+
